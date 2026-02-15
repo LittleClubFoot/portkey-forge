@@ -50,26 +50,37 @@ A cross-platform desktop application built with **Tauri 2.x** (Rust backend + Re
 └── src-tauri/Cargo.toml
 ```
 
-## Development
+## Usage
+
+The app is a **single standalone binary** — no installation required. Download the binary for your platform and double-click to launch.
+
+| Platform | Binary |
+|----------|--------|
+| Linux    | `kids-media-manager` |
+| macOS    | `Kids Media Manager.app` |
+| Windows  | `Kids Media Manager.exe` |
+
+The entire UI is embedded inside the binary at compile time. No web server, no runtime dependencies.
+
+## Building from Source
 
 ### Prerequisites
 - [Rust](https://rustup.rs/) (latest stable)
 - [Node.js](https://nodejs.org/) (18+)
-- [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/)
+- [Tauri system dependencies](https://v2.tauri.app/start/prerequisites/)
 
-### Setup
+### Build the standalone binary
 ```bash
 npm install
-```
-
-### Run Development Server
-```bash
-npm run tauri dev
-```
-
-### Build for Production
-```bash
 npm run tauri build
+```
+
+The binary will be at `src-tauri/target/release/kids-media-manager` (or `.exe` on Windows).
+
+### Development (with hot-reload)
+```bash
+npm install
+npm run tauri dev
 ```
 
 ## Architecture
