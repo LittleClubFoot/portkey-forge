@@ -100,7 +100,7 @@ export default function MediaGrid({
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">
-            Media Library
+            Vault
             <span className="ml-2 text-sm font-normal text-gray-500">
               ({filteredAndSorted.length}{" "}
               {filteredAndSorted.length === 1 ? "item" : "items"})

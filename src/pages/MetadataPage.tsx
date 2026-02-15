@@ -18,15 +18,15 @@ export default function MetadataPage() {
     return (
       <div className="text-center py-16">
         <Sparkles size={48} className="mx-auto text-gray-300 mb-4" />
-        <h2 className="page-header">Metadata Enrichment</h2>
-        <p className="text-gray-500">Connect a device to enrich media metadata.</p>
+        <h2 className="page-header">Enchant</h2>
+        <p className="text-gray-500">Link a Portkey Player to enchant media with metadata.</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="page-header">Metadata Enrichment</h2>
+      <h2 className="page-header">Enchant</h2>
 
       {error && <ErrorMessage message={error} onDismiss={clearError} />}
 

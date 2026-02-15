@@ -4,10 +4,11 @@ import {
   Film,
   Sparkles,
   Tag,
-  Settings,
-  BarChart3,
+  BookOpen,
+  ScrollText,
   Menu,
   X,
+  Wand2,
 } from "lucide-react";
 import { useState } from "react";
 import { useDeviceStore } from "./stores/deviceStore";
@@ -21,12 +22,12 @@ import ConfigPage from "./pages/ConfigPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 
 const navItems = [
-  { to: "/device", icon: HardDrive, label: "Device" },
-  { to: "/library", icon: Film, label: "Media Library" },
-  { to: "/metadata", icon: Sparkles, label: "Metadata" },
-  { to: "/tags", icon: Tag, label: "Tags" },
-  { to: "/config", icon: Settings, label: "Settings" },
-  { to: "/analytics", icon: BarChart3, label: "Analytics" },
+  { to: "/device", icon: HardDrive, label: "Portkey Player" },
+  { to: "/library", icon: Film, label: "Vault" },
+  { to: "/metadata", icon: Sparkles, label: "Enchant" },
+  { to: "/tags", icon: Wand2, label: "Portkeys" },
+  { to: "/config", icon: BookOpen, label: "Spellbook" },
+  { to: "/analytics", icon: ScrollText, label: "Chronicle" },
 ];
 
 export default function App() {
@@ -59,8 +60,8 @@ export default function App() {
               <Film size={18} className="text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">Kids Media</h1>
-              <p className="text-xs text-gray-500">Manager</p>
+              <h1 className="text-lg font-bold text-gray-900">Portkey</h1>
+              <p className="text-xs text-gray-500">Forge</p>
             </div>
           </div>
 
@@ -73,7 +74,7 @@ export default function App() {
                 }`}
               />
               <span className="text-xs text-gray-600">
-                {device ? device.name : "No device connected"}
+                {device ? device.name : "No player linked"}
               </span>
             </div>
           </div>
@@ -99,7 +100,7 @@ export default function App() {
 
           {/* Footer */}
           <div className="px-4 py-3 border-t border-gray-200">
-            <p className="text-xs text-gray-400">Kids Media Manager v0.1.0</p>
+            <p className="text-xs text-gray-400">Portkey Forge v0.1.0</p>
           </div>
         </div>
       </aside>
@@ -121,7 +122,7 @@ export default function App() {
               path="/device"
               element={
                 <div className="space-y-6">
-                  <h2 className="page-header">Device Connection</h2>
+                  <h2 className="page-header">Portkey Player</h2>
                   <DeviceInfo />
                   <DeviceList />
                 </div>

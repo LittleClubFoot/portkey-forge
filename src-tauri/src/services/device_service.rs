@@ -9,11 +9,11 @@ const VIDEO_EXTENSIONS: &[&str] = &[
     "mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v",
 ];
 
-/// Name of the signature file that marks a directory as a Kids Media device.
+/// Name of the signature file that marks a directory as a Portkey Player device.
 const SIGNATURE_FILE: &str = ".kidsmedia_device";
 
 /// Detects and manages external USB / media devices that contain
-/// the Kids Media signature file.
+/// the Portkey Player signature file.
 pub struct DeviceDetector;
 
 impl DeviceDetector {
@@ -24,7 +24,7 @@ impl DeviceDetector {
 
     // ── scanning ────────────────────────────────────────────────
 
-    /// Scan mounted drives for ones that contain the Kids Media signature file.
+    /// Scan mounted drives for ones that contain the Portkey Player signature file.
     /// Returns a list of root paths for every valid device found.
     pub async fn scan_drives(&self) -> Result<Vec<PathBuf>> {
         let candidate_roots = Self::platform_roots();
@@ -156,7 +156,7 @@ impl DeviceDetector {
     // ── verification ────────────────────────────────────────────
 
     /// Check whether the given path contains the `.kidsmedia_device`
-    /// signature file, confirming it as a valid Kids Media device.
+    /// signature file, confirming it as a valid Portkey Player device.
     pub async fn verify_device(&self, path: &Path) -> bool {
         path.join(SIGNATURE_FILE).exists()
     }

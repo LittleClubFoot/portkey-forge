@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tag } from "lucide-react";
+import { Wand2 } from "lucide-react";
 import { useDeviceStore } from "../stores/deviceStore";
 import TagAssignment from "../components/TagManager/TagAssignment";
 import TagWriter from "../components/TagManager/TagWriter";
@@ -14,9 +14,9 @@ export default function TagsPage() {
   if (!device) {
     return (
       <div className="text-center py-16">
-        <Tag size={48} className="mx-auto text-gray-300 mb-4" />
-        <h2 className="page-header">Tag Management</h2>
-        <p className="text-gray-500">Connect a device to manage tags.</p>
+        <Wand2 size={48} className="mx-auto text-gray-300 mb-4" />
+        <h2 className="page-header">Portkeys</h2>
+        <p className="text-gray-500">Link a Portkey Player to manage portkeys.</p>
       </div>
     );
   }
@@ -29,7 +29,7 @@ export default function TagsPage() {
 
   return (
     <div className="space-y-6">
-      <h2 className="page-header">Tag Management</h2>
+      <h2 className="page-header">Portkeys</h2>
 
       <div className="flex border-b border-gray-200">
         {tabs.map((tab) => (

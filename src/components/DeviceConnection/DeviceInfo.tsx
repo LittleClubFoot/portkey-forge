@@ -34,7 +34,7 @@ export default function DeviceInfo() {
           onClick={refresh}
           className="flex-shrink-0 rounded-md p-2 text-gray-400 hover:bg-gray-100
                      hover:text-gray-600 transition-colors"
-          aria-label="Refresh device info"
+          aria-label="Refresh player info"
         >
           <RefreshCw className="h-4 w-4" />
         </button>
@@ -73,7 +73,7 @@ export default function DeviceInfo() {
           <p className="text-sm font-medium text-gray-800">
             {device.video_count} {device.video_count === 1 ? "video" : "videos"}
           </p>
-          <p className="text-xs text-gray-500">Detected on device</p>
+          <p className="text-xs text-gray-500">Found on player</p>
         </div>
       </div>
 
@@ -85,7 +85,7 @@ export default function DeviceInfo() {
                      text-sm font-medium bg-gray-200 text-gray-800 hover:bg-gray-300
                      active:bg-gray-400 transition-colors"
         >
-          Disconnect
+          Unlink
         </button>
         <button
           onClick={eject}
@@ -94,7 +94,7 @@ export default function DeviceInfo() {
                      active:bg-blue-800 transition-colors"
         >
           <Usb className="h-4 w-4" />
-          Safe Eject
+          Release
         </button>
       </div>
     </div>

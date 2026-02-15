@@ -1,15 +1,15 @@
-# Kids Media Manager
+# Portkey Forge
 
-A cross-platform desktop application built with **Tauri 2.x** (Rust backend + React/TypeScript frontend) for managing the Kids Media Player device.
+A cross-platform desktop application built with **Tauri 2.x** (Rust backend + React/TypeScript frontend) for managing the **Portkey Player** device.
 
 ## Features
 
-- **Device Detection** - Auto-detect Raspberry Pi media player devices via USB
-- **Media Library** - Browse, add, and remove video files with grid/list views
-- **TMDB Metadata** - Auto-enrich video files with metadata from The Movie Database
-- **Tag Management** - Assign RFID/NFC tags to media items for physical playback control
-- **Parental Controls** - Configure quiet hours, daily limits, and content restrictions
-- **Analytics Dashboard** - Visualize playback history with charts and statistics
+- **Portkey Player** - Auto-detect and link to the Portkey Player device via USB
+- **Vault** - Browse, add, and remove video files with grid/list views
+- **Enchant** - Auto-enrich video files with metadata from The Movie Database
+- **Portkeys** - Assign RFID/NFC tags to media items for physical playback control
+- **Spellbook** - Configure parental controls, quiet hours, daily limits, and content restrictions
+- **Chronicle** - Visualize playback history with charts and statistics
 
 ## Tech Stack
 
@@ -56,9 +56,9 @@ The app is a **single standalone binary** — no installation required. Download
 
 | Platform | Binary |
 |----------|--------|
-| Linux    | `kids-media-manager` |
-| macOS    | `Kids Media Manager.app` |
-| Windows  | `Kids Media Manager.exe` |
+| Linux    | `portkey-forge` |
+| macOS    | `Portkey Forge.app` |
+| Windows  | `Portkey Forge.exe` |
 
 The entire UI is embedded inside the binary at compile time. No web server, no runtime dependencies.
 
@@ -75,7 +75,7 @@ npm install
 npm run tauri build
 ```
 
-The binary will be at `src-tauri/target/release/kids-media-manager` (or `.exe` on Windows).
+The binary will be at `src-tauri/target/release/portkey-forge` (or `.exe` on Windows).
 
 ### Development (with hot-reload)
 ```bash

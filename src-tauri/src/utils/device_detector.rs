@@ -60,7 +60,7 @@ pub fn get_mount_points() -> Vec<String> {
 }
 
 /// Check whether a given path contains the `.kidsmedia_device` marker file,
-/// indicating it is a valid Kids Media device.
+/// indicating it is a valid Portkey Player device.
 pub fn is_kidsmedia_device(path: &str) -> bool {
     let marker = Path::new(path).join(".kidsmedia_device");
     marker.exists()

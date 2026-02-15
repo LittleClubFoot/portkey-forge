@@ -34,7 +34,7 @@ export default function DeviceList() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
           <Search className="h-5 w-5 text-gray-500" />
-          Detected Devices
+          Discovered Players
         </h2>
         <button
           onClick={rescan}
@@ -57,14 +57,14 @@ export default function DeviceList() {
       {isScanning ? (
         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
           <LoadingSpinner className="h-8 w-8 text-blue-600 mb-3" />
-          <p className="text-sm font-medium">Scanning for devices...</p>
+          <p className="text-sm font-medium">Scanning for players...</p>
         </div>
       ) : availableDevices.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-gray-400">
           <Usb className="h-10 w-10 mb-3" />
-          <p className="text-sm font-medium text-gray-600 mb-1">No devices found</p>
+          <p className="text-sm font-medium text-gray-600 mb-1">No players found</p>
           <p className="text-xs text-gray-400 text-center max-w-xs">
-            Connect a USB storage device and click Rescan to detect it.
+            Connect a Portkey Player via USB and click Rescan to discover it.
           </p>
         </div>
       ) : (
@@ -100,7 +100,7 @@ export default function DeviceList() {
                            text-sm font-medium bg-blue-600 text-white hover:bg-blue-700
                            active:bg-blue-800 transition-colors"
               >
-                Connect
+                Link
               </button>
             </li>
           ))}

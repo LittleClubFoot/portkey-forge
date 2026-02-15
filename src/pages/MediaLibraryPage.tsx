@@ -22,8 +22,8 @@ export default function MediaLibraryPage() {
     return (
       <div className="text-center py-16">
         <Film size={48} className="mx-auto text-gray-300 mb-4" />
-        <h2 className="page-header">Media Library</h2>
-        <p className="text-gray-500">Connect a device to view its media library.</p>
+        <h2 className="page-header">Vault</h2>
+        <p className="text-gray-500">Link a Portkey Player to browse its vault.</p>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export default function MediaLibraryPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="page-header mb-0">Media Library</h2>
+        <h2 className="page-header mb-0">Vault</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setViewMode("grid")}

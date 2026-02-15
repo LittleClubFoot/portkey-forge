@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useDeviceStore } from "../stores/deviceStore";
 import RulesEditor from "../components/ConfigEditor/RulesEditor";
 import NASSettings from "../components/ConfigEditor/NASSettings";
@@ -17,7 +17,7 @@ export default function ConfigPage() {
 
   return (
     <div className="space-y-6">
-      <h2 className="page-header">Settings</h2>
+      <h2 className="page-header">Spellbook</h2>
 
       <div className="flex border-b border-gray-200">
         {tabs.map((tab) => (
@@ -41,8 +41,8 @@ export default function ConfigPage() {
           <RulesEditor />
         ) : (
           <div className="card text-center py-8">
-            <Settings size={32} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500">Connect a device to edit parental controls.</p>
+            <BookOpen size={32} className="mx-auto text-gray-300 mb-3" />
+            <p className="text-gray-500">Link a Portkey Player to edit parental controls.</p>
           </div>
         )
       )}
@@ -51,8 +51,8 @@ export default function ConfigPage() {
           <NASSettings />
         ) : (
           <div className="card text-center py-8">
-            <Settings size={32} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500">Connect a device to configure NAS settings.</p>
+            <BookOpen size={32} className="mx-auto text-gray-300 mb-3" />
+            <p className="text-gray-500">Link a Portkey Player to configure NAS settings.</p>
           </div>
         )
       )}

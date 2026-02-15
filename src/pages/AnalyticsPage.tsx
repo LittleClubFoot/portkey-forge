@@ -1,4 +1,4 @@
-import { BarChart3 } from "lucide-react";
+import { ScrollText } from "lucide-react";
 import { useDeviceStore } from "../stores/deviceStore";
 import Dashboard from "../components/Analytics/Dashboard";
 
@@ -8,16 +8,16 @@ export default function AnalyticsPage() {
   if (!device) {
     return (
       <div className="text-center py-16">
-        <BarChart3 size={48} className="mx-auto text-gray-300 mb-4" />
-        <h2 className="page-header">Analytics</h2>
-        <p className="text-gray-500">Connect a device to view playback analytics.</p>
+        <ScrollText size={48} className="mx-auto text-gray-300 mb-4" />
+        <h2 className="page-header">Chronicle</h2>
+        <p className="text-gray-500">Link a Portkey Player to view playback history.</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="page-header">Analytics</h2>
+      <h2 className="page-header">Chronicle</h2>
       <Dashboard />
     </div>
   );
