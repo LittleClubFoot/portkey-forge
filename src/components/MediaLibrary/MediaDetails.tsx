@@ -8,7 +8,6 @@ import {
   FolderOpen,
   ExternalLink,
   Trash2,
-  Sparkles,
   Star,
   Tag,
 } from "lucide-react";
@@ -24,14 +23,12 @@ import {
 interface MediaDetailsProps {
   item: MediaItem;
   enrichedItem: EnrichedMediaItem | null;
-  onEnrich: () => void;
   onRemove: () => void;
 }
 
 export default function MediaDetails({
   item,
   enrichedItem,
-  onEnrich,
   onRemove,
 }: MediaDetailsProps) {
   const [confirmRemove, setConfirmRemove] = useState(false);
@@ -237,20 +234,6 @@ export default function MediaDetails({
 
       {/* Action buttons */}
       <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
-        {!enrichedItem && (
-          <button
-            onClick={onEnrich}
-            className={clsx(
-              "inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors",
-              "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-            )}
-          >
-            <Sparkles className="h-4 w-4" />
-            Enrich Metadata
-          </button>
-        )}
-
         {confirmRemove ? (
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Remove this item?</span>

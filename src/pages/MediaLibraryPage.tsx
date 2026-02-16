@@ -78,7 +78,6 @@ export default function MediaLibraryPage() {
               <MediaDetails
                 item={selectedItem}
                 enrichedItem={enrichedItems.get(selectedItem.path) ?? null}
-                onEnrich={() => {}}
                 onRemove={() => {
                   remove(selectedItem.path);
                   setSelectedItem(null);

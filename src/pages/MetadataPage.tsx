@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useMedia } from "../hooks/useMedia";
-import { useMetadata } from "../hooks/useMetadata";
+import { useMetadataStore } from "../stores/mediaStore";
 import { useDeviceStore } from "../stores/deviceStore";
 import AutoEnrich from "../components/MetadataEnricher/AutoEnrich";
 import ManualSearch from "../components/MetadataEnricher/ManualSearch";
@@ -10,7 +10,9 @@ import ErrorMessage from "../components/common/ErrorMessage";
 export default function MetadataPage() {
   const device = useDeviceStore((s) => s.connectedDevice);
   const { items } = useMedia();
-  const { enrichWithSelection, error, clearError } = useMetadata();
+  const enrichWithSelection = useMetadataStore((s) => s.enrichWithSelection);
+  const error = useMetadataStore((s) => s.error);
+  const clearError = useMetadataStore((s) => s.clearError);
   const [activeTab, setActiveTab] = useState<"auto" | "manual">("auto");
   const [selectedVideoPath, setSelectedVideoPath] = useState<string>("");
 

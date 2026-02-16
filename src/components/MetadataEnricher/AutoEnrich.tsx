@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { CheckCircle, XCircle, Clock, Loader2 } from "lucide-react";
 import clsx from "clsx";
-import { useMetadata } from "../../hooks/useMetadata";
+import { useMetadataStore } from "../../stores/mediaStore";
 import type { MediaItem } from "../../types/media";
 
 type ItemStatus = "pending" | "processing" | "success" | "failed";
@@ -37,7 +37,7 @@ function statusLabel(status: ItemStatus): string {
 }
 
 export default function AutoEnrich({ items }: AutoEnrichProps) {
-  const { autoEnrich } = useMetadata();
+  const autoEnrich = useMetadataStore((s) => s.autoEnrich);
   const [statuses, setStatuses] = useState<Record<string, ItemStatus>>({});
   const [batchRunning, setBatchRunning] = useState(false);
   const [batchCurrent, setBatchCurrent] = useState(0);

@@ -8,8 +8,6 @@ import CardPrinter from "../components/TagManager/CardPrinter";
 export default function TagsPage() {
   const device = useDeviceStore((s) => s.connectedDevice);
   const [activeTab, setActiveTab] = useState<"assign" | "write" | "print">("assign");
-  const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
-  const [selectedMediaPath, setSelectedMediaPath] = useState<string | null>(null);
 
   if (!device) {
     return (
@@ -48,8 +46,8 @@ export default function TagsPage() {
       </div>
 
       {activeTab === "assign" && <TagAssignment />}
-      {activeTab === "write" && <TagWriter tagId={selectedTagId} />}
-      {activeTab === "print" && <CardPrinter mediaPath={selectedMediaPath} />}
+      {activeTab === "write" && <TagWriter tagId={null} />}
+      {activeTab === "print" && <CardPrinter mediaPath={null} />}
     </div>
   );
 }

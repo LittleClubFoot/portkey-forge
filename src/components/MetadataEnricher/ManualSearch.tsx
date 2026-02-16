@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Search, Loader2 } from "lucide-react";
 import clsx from "clsx";
-import { useMetadata } from "../../hooks/useMetadata";
+import { useMetadataStore } from "../../stores/mediaStore";
 import type { TMDBSearchResult } from "../../types/media";
 import SearchResults from "./SearchResults";
 
@@ -22,7 +22,10 @@ export default function ManualSearch({
   videoPath,
   onSelect,
 }: ManualSearchProps) {
-  const { searchResults, isSearching, search, clearResults } = useMetadata();
+  const searchResults = useMetadataStore((s) => s.searchResults);
+  const isSearching = useMetadataStore((s) => s.isSearching);
+  const search = useMetadataStore((s) => s.searchTMDB);
+  const clearResults = useMetadataStore((s) => s.clearResults);
   const [query, setQuery] = useState("");
   const [year, setYear] = useState<string>("");
   const [mediaType, setMediaType] = useState<MediaTypeFilter>("all");
