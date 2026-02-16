@@ -1,6 +1,24 @@
+use once_cell::sync::Lazy;
 use regex::Regex;
 
 use crate::models::metadata::{ParsedFilename, ParsedMediaType};
+
+static RE_SXEX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?i)[Ss](\d{1,2})[Ee](\d{1,3})").unwrap());
+static RE_CROSS: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?i)(\d{1,2})[xX](\d{1,3})").unwrap());
+static RE_VERBOSE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?i)Season\s*(\d{1,2})\s*Episode\s*(\d{1,3})").unwrap());
+static RE_YEAR: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"[\(\[\.\s_]?((?:19|20)\d{2})[\)\]\.\s_]?").unwrap());
+static RE_SPACES: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"\s{2,}").unwrap());
+static RE_QUALITY: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(
+        r"(?i)\b(1080p|720p|480p|2160p|4K|BluRay|BRRip|WEBRip|WEBDL|WEB-DL|WEB\.DL|HDRip|DVDRip|HDTV|x264|x265|h264|h265|HEVC|AAC|AC3|DTS|REMUX|PROPER|REPACK|EXTENDED|UNRATED|DIRECTORS\.CUT|10bit|HDR|SDR|AMZN|NF|DSNP|HMAX)\b",
+    )
+    .unwrap()
+});
 
 /// Parse a video filename to extract metadata such as title, year, season, and episode.
 pub fn parse(filename: &str) -> ParsedFilename {
@@ -52,8 +70,7 @@ fn strip_extension(filename: &str) -> String {
 /// Returns (season, episode, match_start_position).
 fn extract_season_episode(name: &str) -> (Option<u32>, Option<u32>, Option<usize>) {
     // Pattern: S01E05 or s01e05
-    let re_sxex = Regex::new(r"(?i)[Ss](\d{1,2})[Ee](\d{1,3})").unwrap();
-    if let Some(caps) = re_sxex.captures(name) {
+    if let Some(caps) = RE_SXEX.captures(name) {
         let season = caps.get(1).unwrap().as_str().parse::<u32>().ok();
         let episode = caps.get(2).unwrap().as_str().parse::<u32>().ok();
         let start = caps.get(0).unwrap().start();
@@ -61,8 +78,7 @@ fn extract_season_episode(name: &str) -> (Option<u32>, Option<u32>, Option<usize
     }
 
     // Pattern: 1x05
-    let re_cross = Regex::new(r"(?i)(\d{1,2})[xX](\d{1,3})").unwrap();
-    if let Some(caps) = re_cross.captures(name) {
+    if let Some(caps) = RE_CROSS.captures(name) {
         let season = caps.get(1).unwrap().as_str().parse::<u32>().ok();
         let episode = caps.get(2).unwrap().as_str().parse::<u32>().ok();
         let start = caps.get(0).unwrap().start();
@@ -70,9 +86,7 @@ fn extract_season_episode(name: &str) -> (Option<u32>, Option<u32>, Option<usize
     }
 
     // Pattern: Season 1 Episode 5
-    let re_verbose =
-        Regex::new(r"(?i)Season\s*(\d{1,2})\s*Episode\s*(\d{1,3})").unwrap();
-    if let Some(caps) = re_verbose.captures(name) {
+    if let Some(caps) = RE_VERBOSE.captures(name) {
         let season = caps.get(1).unwrap().as_str().parse::<u32>().ok();
         let episode = caps.get(2).unwrap().as_str().parse::<u32>().ok();
         let start = caps.get(0).unwrap().start();
@@ -86,10 +100,7 @@ fn extract_season_episode(name: &str) -> (Option<u32>, Option<u32>, Option<usize
 /// Matches patterns like (2013), [2013], or .2013.
 /// Returns (year, match_start_position).
 fn extract_year(name: &str) -> (Option<u32>, Option<usize>) {
-    // Match year in parentheses, brackets, or surrounded by dots/spaces/underscores/start/end
-    let re_year =
-        Regex::new(r"[\(\[\.\s_]?((?:19|20)\d{2})[\)\]\.\s_]?").unwrap();
-    if let Some(caps) = re_year.captures(name) {
+    if let Some(caps) = RE_YEAR.captures(name) {
         let year = caps.get(1).unwrap().as_str().parse::<u32>().ok();
         let start = caps.get(0).unwrap().start();
         return (year, Some(start));
@@ -121,18 +132,14 @@ fn build_title(name: &str, se_pos: Option<usize>, year_pos: Option<usize>) -> St
     let cleaned = cleaned.replace('.', " ").replace('_', " ");
 
     // Collapse multiple spaces and trim
-    let re_spaces = Regex::new(r"\s{2,}").unwrap();
-    let cleaned = re_spaces.replace_all(&cleaned, " ");
+    let cleaned = RE_SPACES.replace_all(&cleaned, " ");
 
     cleaned.trim().to_string()
 }
 
 /// Remove common quality markers, codec identifiers, and release group tags.
 fn remove_quality_markers(input: &str) -> String {
-    let re = Regex::new(
-        r"(?i)\b(1080p|720p|480p|2160p|4K|BluRay|BRRip|WEBRip|WEBDL|WEB-DL|WEB\.DL|HDRip|DVDRip|HDTV|x264|x265|h264|h265|HEVC|AAC|AC3|DTS|REMUX|PROPER|REPACK|EXTENDED|UNRATED|DIRECTORS\.CUT|10bit|HDR|SDR|AMZN|NF|DSNP|HMAX)\b"
-    ).unwrap();
-    re.replace_all(input, " ").to_string()
+    RE_QUALITY.replace_all(input, " ").to_string()
 }
 
 #[cfg(test)]

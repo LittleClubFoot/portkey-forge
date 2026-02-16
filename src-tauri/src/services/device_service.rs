@@ -1,13 +1,9 @@
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
+use crate::constants::VIDEO_EXTENSIONS;
 use crate::error::{AppError, Result};
 use crate::models::{DeviceInfo, DeviceSignature};
-
-/// File extensions recognized as video files.
-const VIDEO_EXTENSIONS: &[&str] = &[
-    "mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v",
-];
 
 /// Name of the signature file that marks a directory as a Portkey Player device.
 const SIGNATURE_FILE: &str = ".kidsmedia_device";

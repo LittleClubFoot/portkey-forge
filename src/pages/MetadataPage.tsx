@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useMedia } from "../hooks/useMedia";
-import { useMetadataStore } from "../stores/mediaStore";
+import { useMetadataStore } from "../stores/metadataStore";
 import { useDeviceStore } from "../stores/deviceStore";
 import AutoEnrich from "../components/MetadataEnricher/AutoEnrich";
 import ManualSearch from "../components/MetadataEnricher/ManualSearch";

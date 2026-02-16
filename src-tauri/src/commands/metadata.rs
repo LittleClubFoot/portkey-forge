@@ -26,12 +26,10 @@ pub async fn search_tmdb(
     let tmdb = TMDBService::new(api_key.clone());
 
     match media_type.as_str() {
-        "movie" => tmdb.search_movie(&query, year).await,
-        "tv" => tmdb.search_tv(&query, year).await,
+        "movie" | "tv" => tmdb.search(&media_type, &query, year).await,
         _ => {
-            let mut results = tmdb.search_movie(&query, year).await?;
-            let tv_results = tmdb.search_tv(&query, year).await?;
-            results.extend(tv_results);
+            let mut results = tmdb.search("movie", &query, year).await?;
+            results.extend(tmdb.search("tv", &query, year).await?);
             Ok(results)
         }
     }

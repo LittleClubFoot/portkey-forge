@@ -32,100 +32,64 @@ impl TMDBService {
 
     // ── search ──────────────────────────────────────────────────
 
-    /// Search TMDB for movies matching `query`.
-    /// Optionally filter by `year` (primary release year).
-    pub async fn search_movie(
+    /// Search TMDB for movies or TV shows matching `query`.
+    ///
+    /// `media_type` must be `"movie"` or `"tv"`.
+    /// Optionally filter by `year`.
+    pub async fn search(
         &self,
+        media_type: &str,
         query: &str,
         year: Option<u32>,
     ) -> Result<Vec<TMDBSearchResult>> {
         sleep(RATE_LIMIT_DELAY).await;
 
+        let (endpoint, year_param) = match media_type {
+            "tv" => ("tv", "first_air_date_year"),
+            _ => ("movie", "primary_release_year"),
+        };
+
         let mut request = self
             .client
-            .get(format!("{}/search/movie", BASE_URL))
+            .get(format!("{}/search/{}", BASE_URL, endpoint))
             .query(&[("api_key", &self.api_key), ("query", &query.to_string())]);
 
         if let Some(y) = year {
-            request = request.query(&[("primary_release_year", &y.to_string())]);
+            request = request.query(&[(year_param, &y.to_string())]);
         }
 
         let response = request.send().await.map_err(|e| {
-            AppError::TMDBError(format!("Movie search request failed: {}", e))
+            AppError::TMDBError(format!("{} search request failed: {}", endpoint, e))
         })?;
 
         if !response.status().is_success() {
             return Err(AppError::TMDBError(format!(
-                "TMDB movie search returned status {}",
+                "TMDB {} search returned status {}",
+                endpoint,
                 response.status()
             )));
         }
 
         let search_response: TMDBSearchResponse = response.json().await.map_err(|e| {
-            AppError::TMDBError(format!("Failed to parse movie search response: {}", e))
+            AppError::TMDBError(format!("Failed to parse {} search response: {}", endpoint, e))
         })?;
 
+        let is_tv = media_type == "tv";
         let results = search_response
             .results
             .into_iter()
             .map(|raw| TMDBSearchResult {
                 id: raw.id,
-                title: raw.title.unwrap_or_default(),
+                title: if is_tv {
+                    raw.name.unwrap_or_default()
+                } else {
+                    raw.title.unwrap_or_default()
+                },
                 overview: raw.overview.unwrap_or_default(),
-                release_date: raw.release_date,
+                release_date: if is_tv { raw.first_air_date } else { raw.release_date },
                 poster_path: raw.poster_path,
                 vote_average: raw.vote_average,
-                media_type: "movie".to_string(),
-            })
-            .collect();
-
-        Ok(results)
-    }
-
-    /// Search TMDB for TV shows matching `query`.
-    /// Optionally filter by `year` (first air date year).
-    pub async fn search_tv(
-        &self,
-        query: &str,
-        year: Option<u32>,
-    ) -> Result<Vec<TMDBSearchResult>> {
-        sleep(RATE_LIMIT_DELAY).await;
-
-        let mut request = self
-            .client
-            .get(format!("{}/search/tv", BASE_URL))
-            .query(&[("api_key", &self.api_key), ("query", &query.to_string())]);
-
-        if let Some(y) = year {
-            request = request.query(&[("first_air_date_year", &y.to_string())]);
-        }
-
-        let response = request.send().await.map_err(|e| {
-            AppError::TMDBError(format!("TV search request failed: {}", e))
-        })?;
-
-        if !response.status().is_success() {
-            return Err(AppError::TMDBError(format!(
-                "TMDB TV search returned status {}",
-                response.status()
-            )));
-        }
-
-        let search_response: TMDBSearchResponse = response.json().await.map_err(|e| {
-            AppError::TMDBError(format!("Failed to parse TV search response: {}", e))
-        })?;
-
-        let results = search_response
-            .results
-            .into_iter()
-            .map(|raw| TMDBSearchResult {
-                id: raw.id,
-                title: raw.name.unwrap_or_default(),
-                overview: raw.overview.unwrap_or_default(),
-                release_date: raw.first_air_date,
-                poster_path: raw.poster_path,
-                vote_average: raw.vote_average,
-                media_type: "tv".to_string(),
+                media_type: media_type.to_string(),
             })
             .collect();
 

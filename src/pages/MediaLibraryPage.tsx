@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Film, Plus, LayoutGrid, List } from "lucide-react";
 import { useMedia } from "../hooks/useMedia";
-import { useMetadataStore } from "../stores/mediaStore";
+import { useMetadataStore } from "../stores/metadataStore";
 import { useDeviceStore } from "../stores/deviceStore";
 import MediaGrid from "../components/MediaLibrary/MediaGrid";
 import MediaDetails from "../components/MediaLibrary/MediaDetails";

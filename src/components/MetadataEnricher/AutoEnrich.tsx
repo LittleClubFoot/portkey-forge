@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { CheckCircle, XCircle, Clock, Loader2 } from "lucide-react";
 import clsx from "clsx";
-import { useMetadataStore } from "../../stores/mediaStore";
+import { useMetadataStore } from "../../stores/metadataStore";
 import type { MediaItem } from "../../types/media";
 
 type ItemStatus = "pending" | "processing" | "success" | "failed";

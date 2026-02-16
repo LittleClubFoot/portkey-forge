@@ -2,13 +2,9 @@ use std::path::{Path, PathBuf};
 use tokio::fs;
 use walkdir::WalkDir;
 
+use crate::constants::VIDEO_EXTENSIONS;
 use crate::error::{AppError, Result};
 use crate::models::media::{MediaCategory, MediaItem};
-
-/// Recognized video file extensions.
-const VIDEO_EXTENSIONS: &[&str] = &[
-    "mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v",
-];
 
 /// Repository for scanning, adding, and removing media files on the device.
 pub struct MediaRepository {

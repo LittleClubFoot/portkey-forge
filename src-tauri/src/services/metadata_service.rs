@@ -39,21 +39,17 @@ impl<'a> MetadataService<'a> {
             .ok_or_else(|| AppError::MediaError("Invalid video filename".into()))?
             .to_string();
 
-        let parsed = filename_parser::parse_filename(&filename);
+        let parsed = filename_parser::parse(&filename);
 
         // Search TMDB based on the parsed media type
-        let search_results = match parsed.media_type {
-            ParsedMediaType::TVShow => {
-                self.tmdb_service
-                    .search_tv(&parsed.title, parsed.year)
-                    .await?
-            }
-            _ => {
-                self.tmdb_service
-                    .search_movie(&parsed.title, parsed.year)
-                    .await?
-            }
+        let media_type = match parsed.media_type {
+            ParsedMediaType::TVShow => "tv",
+            _ => "movie",
         };
+        let search_results = self
+            .tmdb_service
+            .search(media_type, &parsed.title, parsed.year)
+            .await?;
 
         // Pick the first result (if any) and fetch full details
         if let Some(best) = search_results.first() {
@@ -80,7 +76,7 @@ impl<'a> MetadataService<'a> {
             .ok_or_else(|| AppError::MediaError("Invalid video filename".into()))?
             .to_string();
 
-        let parsed = filename_parser::parse_filename(&filename);
+        let parsed = filename_parser::parse(&filename);
 
         match media_type {
             "movie" => {
