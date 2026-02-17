@@ -48,6 +48,12 @@ fn main() {
             commands::tags::unassign_tag,
             commands::tags::get_tag_assignments,
             commands::tags::generate_card_data,
+            // Watch history commands
+            commands::watch_history::get_watch_history,
+            commands::watch_history::mark_watched,
+            commands::watch_history::mark_unwatched,
+            commands::watch_history::update_resume_position,
+            commands::watch_history::clear_watch_history,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

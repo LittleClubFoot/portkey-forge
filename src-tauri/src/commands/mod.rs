@@ -3,3 +3,4 @@ pub mod media;
 pub mod metadata;
 pub mod config;
 pub mod tags;
+pub mod watch_history;

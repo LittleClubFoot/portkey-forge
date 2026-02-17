@@ -35,6 +35,9 @@ pub enum AppError {
 
     #[error("Image error: {0}")]
     ImageError(#[from] image::ImageError),
+
+    #[error("Database error: {0}")]
+    DatabaseError(String),
 }
 
 // Tauri requires errors to be serializable
